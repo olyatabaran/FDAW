@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<div ng-app="" ng-init="numbers=[1,2,3,4,5,6,7,8,9,10];
+  digits = [2,3,4,5,6,7,8,9,10]">
+    <div ng-repeat="y in digits">
+            <ul ng-repeat="x in numbers">
+                {{y}} * {{x}} = {{y * x }}
+            </ul>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+</body>
+</html>
