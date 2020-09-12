@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<body>
+
+<div ng-app="myApp" ng-controller="namesCtrl">
+
+    <p>Type a letter in the input field:</p>
+
+    <p><input type="text" ng-model="test"></p>
+
+    <table border="1px">
+        <th>
+            Name
+        </th>
+        <th>
+            Mark
+        </th>
+        <tr ng-repeat="x in names | filter:test">
+            <td>
+                {{ x.name }}
+            </td>
+            <td>
+                {{ x.mark }}
+            </td>
+        </tr>
+    </table>
+
+</div>
+<script>
+    angular.module('myApp', []).controller('namesCtrl', function ($scope) {
+        $scope.names = [
+            {name: 'Kristen Korn', mark: 10},
+            {name: 'Birgit Bardo', mark: 9},
+            {name: 'Emilia Sandres', mark: 10},
+            {name: 'Margareth Tetcher', mark: 7},
+            {name: 'Andy Kooper', mark: 5},
+            {name: 'Kris Davidson', mark: 7},
+            {name: 'Gustav Kovalski', mark: 8},
+        ];
+    });
+</script>
+</body>
+</html>

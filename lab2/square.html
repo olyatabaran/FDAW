@@ -1,0 +1,35 @@
+<html>
+<head>
+    <script SRC="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.js">
+    </script>
+    <script>
+        //Defining Services Using Service
+        var app = angular.module('app', []);
+
+        app.service('MathService', function() {
+            this.multiply = function(a, b) { return a * b };
+        });
+
+        app.service('CalculatorService', function(MathService){
+            this.square = function(a) { return MathService.multiply(a,a); };
+        });
+
+        app.controller('CalculatorController', function($scope, CalculatorService) {
+            $scope.square = function() {
+                $scope.answer = CalculatorService.square($scope.number);
+            }
+        });
+    </script>
+</head>
+<body>
+
+<div ng-app="app">
+    <div ng-controller="CalculatorController">
+        Enter a number:
+        <input ng-model="number" type="number">
+        <button ng-click="square()">X<sup>2</sup></button>
+        <div>Answer: {{answer}}</div>
+    </div>
+</div>
+</body>
+</html>
