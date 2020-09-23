@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<body>
+
+<div ng-app="myApp" ng-controller="myCtrl">
+    First Name: <input type="text" ng-model="first_name">
+    <br/>
+    <br/>
+    Last Name: <input type="text" ng-model="last_name">
+    <br/>
+    <br/>
+    Birth date: <input type="date" ng-model="birth_date">
+    <br/>
+    <br/>
+    <label for="education">Select education:</label>
+    <select id="education" ng-model="selectedEducation">
+        <option ng-repeat="education in educations" value="{{education}}">{{education}}</option>
+    </select>
+    <br/>
+    <br/>
+    <p>Undergraduate:</p>
+    <input type="radio" ng-click="yes()" id="yes" name="graduation" value="1">
+    <label for="yes">Yes</label><br>
+    <input type="radio" ng-click="no()" id="no" name="graduation" value="0">
+    <label for="no">No</label><br>
+    <br/>
+    <br/>
+    <div ng-show="showMore">
+        <p>Faculty:</p>
+        <input type="radio" id="chemistry" value="Chemistry" ng-model="facult">
+        <label for="chemistry">Chemistry</label><br>
+        <input type="radio" id="informatics" value="Information technologies" ng-model="facult">
+        <label for="informatics">Information technologies</label><br>
+        <input type="radio" id="mathematics" value="Mathematics" ng-model="facult">
+        <label for="mathematics">Mathematics</label><br>
+        <input type="radio" id="biology" value="Biology" ng-model="facult">
+        <label for="biology">Biology</label><br>
+        <br/>
+        <br/>
+        <label for="subject">Subject:</label>
+        <select id="subject" ng-model="selectedSubject">
+            <option ng-repeat="subject in subjects" value="{{subject}}">{{subject}}</option>
+        </select>
+        <br/>
+        <br/>
+        Undergraduate mark:<input type="number" ng-model="mark">
+        {{ mark >= 8 ? "Very Good!" : "Not Good"}}
+    </div>
+    <br/>
+    <br/>
+    <input type="button" ng-model="accepted" ng-click="accepted()" ng-disabled="acceptedIsDisabled" value="Accept">
+    <input type="button" ng-model="canceled" ng-disabled="canceledIsDisabled" value="Cancel">
+    <br/>
+    <br/>
+    <div ng-show="showResult">
+        {{ first_name }}
+        <br/>
+        {{ last_name }}
+        <br/>
+        {{ birth_date }}
+        <br/>
+        {{ selectedEducation }}
+        <br/>
+        {{ selectedSubject }}
+        <br/>
+        {{ mark }}
+        <br/>
+        {{ facult }}
+
+    </div>
+
+
+</div>
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function ($scope) {
+
+        $scope.educations = ["Secondary", "Secondary special", "Vocational technical", "Incomplete higher"];
+        $scope.subjects = ["Chemistry", "Mathematics", "Economics"];
+
+        $scope.acceptedIsDisabled = true;
+        $scope.canceledIsDisabled = true;
+        $scope.yes = function () {
+            $scope.showMore = true;
+            $scope.acceptedIsDisabled = false;
+        }
+        $scope.no = function () {
+            $scope.showMore = false;
+            $scope.canceledIsDisabled = false;
+            $scope.acceptedIsDisabled = true;
+        }
+        $scope.accepted = function () {
+            $scope.showResult = true;
+        }
+    });
+
+</script>
+</body>
+</html>
