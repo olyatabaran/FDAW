@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <html xmlns="http://www.w3.org/1999/html">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    </head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<body ng-app="App" ng-controller="Login">
+<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal" ng-show="showButton">
+    Войти
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" ng-show="showForm"
+     aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Log In</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning">
+                    Username: test<br/>
+                    Password: test
+                </div>
+                <form name="form" ng-submit="login()" role="form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <i class="fa fa-key"></i>
+                        <input type="text" name="username" id="username" class="form-control" ng-model="username"
+                               required/>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <i class="fa fa-lock"></i>
+                        <input type="password" name="password" id="password" class="form-control" ng-model="password"
+                               required/>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-warning">Войти</button>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br/>
+<br/>
+<div ng-show="showMenu">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <button type="button" class="btn btn-warning" ng-click="List()">Записаться на прием</button>
+            </div>
+            <div class="col-sm">
+                <button type="button" class="btn btn-warning" ng-click="Search()">Наши врачи</button>
+            </div>
+            <div class="col-sm">
+                <button type="button" class="btn btn-warning" ng-click="Service()">Предосталяемые услуги</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-show="showList">
+    <br/>
+    <br/>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <div class="col-3">
+                    <h2 class="btn btn-warning btn-sm btn-block">Запись на прием</h2>
+                    <form ng-submit="todoAdd()">
+                        <input type="text" ng-model="todoInput" size="100" placeholder="Добавить">
+                        <br/>
+                        <br/>
+                        <input type="submit" class="btn btn-warning btn-sm btn-block" value="Добавить">
+                    </form>
+                    <br>
+                    <div ng-repeat="x in todoList">
+                        <input type="checkbox" ng-model="x.done"> <span ng-bind="x.todoText"></span>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <p>
+                        <button ng-click="remove()" class="btn btn-secondary btn-sm btn-block">Удалить выбранные
+                        </button>
+                    </p>
+                </div>
+                <div class="col-sm">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-show="showSearch">
+    <br/>
+    <br/>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+            </div>
+            <div class="col-sm">
+                <button type="button" class="btn btn-outline-warning btn-sm btn-block">
+                    Наши Врачи:
+                </button>
+
+                <br/>
+                Поиск:<p><input type="text" ng-model="test"></p>
+
+                <table border="5px" class="table" style="background-color: lightyellow">
+                    <th scope="row">
+                        <button type="button" class="btn btn-outline-warning btn-lg btn-block">
+                            Имя
+                        </button>
+                    </th>
+                    <th scope="row">
+                        <button type="button" class="btn btn-outline-warning btn-lg btn-block">
+                            Должность
+                        </button>
+                    </th>
+                    <tr ng-repeat="x in names | filter:test">
+                        <td>
+                            {{ x.name }}
+                        </td>
+                        <td>
+                            {{ x.mark }}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-sm">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-show="showService">
+    <br/>
+    <br/>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+            </div>
+            <div class="col-sm">
+            </div>
+            <div class="col-8">
+                <ul>
+                    <li ng-repeat="product in Products" ng-click="ToggleActive(product)"
+                        ng-class="{active:product.Active}">
+                        <button type="button" class="btn btn-outline-warning btn-lg btn-block">{{product.Name}}<span>{{product.Price | currency}}</span>
+                        </button>
+                    </li>
+                </ul>
+                <div class="total">
+                    <br/>
+                    <button type="button" class="btn btn-secondary btn-sm btn-block"> Общая сумма:<span>{{Total() | currency}}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+<script>
+
+    angular.module('App', []).controller('Login', function ($scope) {
+        $scope.showMenu = false;
+        $scope.showButton = true;
+        $scope.showForm = true;
+        $scope.login = function () {
+            $scope.showMenu = true;
+            $scope.showButton = false;
+            $scope.showForm = false;
+        }
+        $scope.showList = false;
+        $scope.showSearch = false;
+        $scope.showService = false;
+        $scope.List = function () {
+            $scope.showList = true;
+            $scope.showSearch = false;
+            $scope.showService = false;
+        }
+        $scope.Search = function () {
+            $scope.showSearch = true;
+            $scope.showList = false;
+            $scope.showService = false;
+        }
+        $scope.Service = function () {
+            $scope.showSearch = false;
+            $scope.showList = false;
+            $scope.showService = true;
+        }
+
+        $scope.names = [
+            {name: 'Ирина Михайленко', mark: 'Стоматолог-терапевт'},
+            {name: 'Степан Меньшиков', mark: 'Стоматолог-ортопед'},
+            {name: 'Алексей Волков', mark: 'Стоматолог-ортодонт'},
+            {name: 'Маргарита Тютина', mark: 'Пародонтолог'},
+            {name: 'Александр Титов', mark: 'Стоматолог-хирург'},
+            {name: 'Николай Движков', mark: 'Детский стоматолог'},
+            {name: 'Георгий Ковальский', mark: 'Зубной техник'},
+        ];
+
+        $scope.todoList = [{todoText: 'Запись на прием к зубному технику в 13 часов', done: false}];
+
+        $scope.todoAdd = function () {
+            $scope.todoList.push({todoText: $scope.todoInput, done: false});
+            $scope.todoInput = "";
+        };
+
+        $scope.remove = function () {
+            var oldList = $scope.todoList;
+            $scope.todoList = [];
+            angular.forEach(oldList, function (x) {
+                if (!x.done) $scope.todoList.push(x);
+            });
+        };
+
+        $scope.Products = [
+            {Id: 1, Name: 'ПРОТЕЗИРОВАНИЕ ЗУБОВ', Price: 18.00, Active: false},
+            {Id: 2, Name: 'ХИРУРГИЯ', Price: 19.00, Active: false},
+            {Id: 3, Name: 'РЕНТГЕН - ДИАГНОСТИКА', Price: 10.00, Active: false},
+            {Id: 4, Name: 'ТЕРАПИЯ', Price: 97.00, Active: false},
+            {Id: 5, Name: 'ЭСТЕТИЧЕСКАЯ СТОМАТОЛОГИЯ', Price: 31.00, Active: false},
+            {Id: 6, Name: 'ОТБЕЛИВАНИЕ ЗУБОВ', Price: 21.00, Active: false},
+            {Id: 7, Name: 'ДЕКОРАТИВНАЯ СТОМАТОЛОГИЯ', Price: 6.00, Active: false},
+            {Id: 8, Name: 'ОБЕЗБОЛИВАНИЕ', Price: 23.25, Active: false},
+            {Id: 9, Name: 'ИМПЛАНТОЛОГИЯ', Price: 17.45, Active: false}
+        ];
+
+        $scope.ToggleActive = function (product) {
+            product.Active = !product.Active;
+        };
+        $scope.Total = function () {
+            var total = 0;
+            angular.forEach($scope.Products, function (product) {
+                if (product.Active) {
+                    total += product.Price;
+                }
+            });
+            return total;
+        };
+
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
